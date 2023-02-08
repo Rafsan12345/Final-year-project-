@@ -1,0 +1,3 @@
+https://ifttt.com/create
+https://io.adafruit.com/RAFSAN/dashboards/iot-project
+https://arduino.cc

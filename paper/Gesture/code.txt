@@ -1,0 +1,86 @@
+#cv2.putText(img, f"{totalFingers}", (75, 50), cv2.FONT_HERSHEY_COMPLEX, 0.9,(0, 0, 0), 2)
+import cv2
+import mediapipe as mp
+import numpy as np
+import pyautogui
+import serial
+import time
+arduino = serial.Serial('COM6', 9600)
+time.sleep(2)
+cap = cv2.VideoCapture(0)
+#cap.set(3,1000)
+#cap.set(4,1000)
+hand_detector = mp.solutions.hands.Hands()
+drawing_utils = mp.solutions.drawing_utils
+screen_width, screen_height = pyautogui.size()
+index_y = 0
+value2 = 0
+
+def send(val):
+
+    if val == 1:
+        arduino.write(b'1')
+
+    elif val == 2 :
+        arduino.write(b'2')
+
+    elif val == 0 :
+        arduino.write(b'0')
+
+    elif val == 3:
+        arduino.write(b'3')
+
+    elif val == 4:
+        arduino.write(b'4')
+
+    elif val == 5:
+        arduino.write(b'5')
+
+    else:
+        pass
+
+
+
+
+while True:
+    _, frame = cap.read()
+    frame = cv2.flip(frame, 1)
+    frame_height, frame_width, _ = frame.shape
+    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    output = hand_detector.process(rgb_frame)
+    hands = output.multi_hand_landmarks
+    if hands:
+        for hand in hands:
+            drawing_utils.draw_landmarks(frame, hand)
+            landmarks = hand.landmark
+            for id, landmark in enumerate(landmarks):
+                x = int(landmark.x*frame_width)
+                y = int(landmark.y*frame_height)
+                th = 2
+                if id == 8:
+                    cv2.circle(img=frame, center=(x,y), radius=20, color=(0, 0, 255),thickness=2)
+                    index_x = screen_width/frame_width*x
+                    index_y = screen_height/frame_height*y
+
+                if id == 4:
+                    cv2.circle(img=frame, center=(x,y), radius=20, color=(0, 0, 255),thickness=2)
+                    thumb_x = screen_width/frame_width*x
+                    thumb_y = screen_height/frame_height*y
+                    #print('outside', abs(index_y - thumb_y))
+                    v = int(index_y - thumb_y)
+                    v = abs(v)
+                    value = np.interp(v,[50,300],[0,10])
+                    value2 = np.interp(value, [0, 10], [400, 150])
+                    #v = min(v,100)
+                    ccc = np.interp(value,[0,10],[0,5])
+                    print(int(ccc))
+                    send(int(ccc))
+
+
+                    cv2.putText(frame, f"Speed {int(value*10)}%", (75, 50), cv2.FONT_HERSHEY_COMPLEX, 0.9, (0, 0, 255), 2)
+                    cv2.rectangle(frame, (50, 150), (85, 400), (0, 255, 0), 3)
+                    cv2.rectangle(frame, (50,int(value2)), (85, 400), (0, 0, 255), cv2.FILLED)
+                    #print(int(value))
+
+    cv2.imshow('Speed regulator', frame)
+    cv2.waitKey(1)
