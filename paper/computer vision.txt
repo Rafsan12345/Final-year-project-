@@ -1,9 +1,0 @@
-An important component of this project is computer vision, which enables visual inspection of controlled locations from remote locations.
-With the help of this jute, it is basically possible to show the visualization of the controlled place from a very remote place or watch it in the form of video or CCTV footage.
-If desired, it can be used for objectification or human detection related or various types of controlling related to computer subjects.
-For the time being, I cut my mobile phone and used it as a webcam to facilitate the project showing and tried to stream all the data of the visualization through the internet i.e. through an IP link based set.
-It uses Python as the programming language and Computer Vision as the library file and media from Computer Vision.
-In this project it will basically detect the motion of any type of object and can detect the movement.
-Along with the whole thing is to see from a far away place.
-I used it as an app called IP Webcam and IPL Invest as a browser.
-Where there is facility of recording and facility of viewing through internet.

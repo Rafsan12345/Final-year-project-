@@ -1,9 +1,0 @@
-The project is mainly based on Internet of Things.I have tried to use all the currently updated technologies of IT.
-Five lamps are kept here as load.Four lamps are connected to the switching module and one lamp is connected to the voltage plane.
-Used dth11 sensor as temperature sensor and methane gas sensor as gas sensor.
-And used acs712 module as voltage dimmer.
-Used adafruit.io website server as virtual control platform.
-I used a web server called IFTTT for controlling.
-And used four relay modules.
-Used tv remote control system for manual control. 
-I have arranged to control the technology through remote control while being very close to the project.

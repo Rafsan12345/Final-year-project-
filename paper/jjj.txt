@@ -1,2 +1,0 @@
-Arduino Uno is used as microcontroller for manual control.Connected to it is the remote control section.
-With microcontroller digital 2 number pin is used as receiver pin from ir sensor . Digital Pin 8,10,11,12 is used for IR remote control best relay controlling.
